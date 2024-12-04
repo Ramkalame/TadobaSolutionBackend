@@ -4,16 +4,20 @@ import com.tadobasolutions.entity.Quote;
 import com.tadobasolutions.repository.QuoteRepository;
 import com.tadobasolutions.service.QuoteService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-@AllArgsConstructor
+@Service
 public class QuoteServiceImpl implements QuoteService {
 
-//    private final QuoteRepository quoteRepository;
+    @Autowired
+    private  QuoteRepository quoteRepository;
 
     @Override
     public String saveQuote(Quote quote) {
-        return "";
+        Quote savedQuote = quoteRepository.save(quote);
+        return "Quote saved with ID: " + savedQuote.getQuoteId();
     }
 
     @Override
