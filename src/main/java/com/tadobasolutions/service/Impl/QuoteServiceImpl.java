@@ -16,12 +16,18 @@ public class QuoteServiceImpl implements QuoteService {
 
     @Override
     public String saveQuote(Quote quote) {
-        Quote savedQuote = quoteRepository.save(quote);
+        Quote newQuote = new Quote();
+        newQuote.setCustomerName(quote.getCustomerName());
+        newQuote.setCustomerEmail(quote.getCustomerEmail());
+        newQuote.setCustomerMobileNumber(quote.getCustomerMobileNumber());
+        newQuote.setQueryDescription(quote.getQueryDescription());
+        Quote savedQuote = quoteRepository.save(newQuote);
         return "Quote saved with ID: " + savedQuote.getQuoteId();
     }
 
     @Override
     public List<Quote> getAllQuoteList() {
-        return List.of();
+        return quoteRepository.findAll();
     }
+
 }

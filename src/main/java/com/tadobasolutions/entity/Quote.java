@@ -11,7 +11,6 @@ import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Builder
@@ -82,5 +81,7 @@ public class Quote {
         this.customerMobileNumber = customerMobileNumber;
         QueryDescription = queryDescription;
     }
+
+    public Quote(){};
 
 }
