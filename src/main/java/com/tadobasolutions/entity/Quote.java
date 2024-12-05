@@ -11,7 +11,6 @@ import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
 @Data
-@NoArgsConstructor
 @Entity
 @Builder
 public class Quote {
