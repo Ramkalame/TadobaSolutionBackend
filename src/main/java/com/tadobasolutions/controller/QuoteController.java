@@ -15,11 +15,17 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/quotes")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = {"https://www.tadobasolutions.com", "https://tadobasolutions.com"})
 public class QuoteController {
 
     @Autowired
     private  QuoteService quoteService;
+
+    @GetMapping("/test")
+    public String test(){
+        return "Test done successfully";
+    }
+
 
     @PostMapping("/save-quote")
     public ResponseEntity<ApiResponse<String>> saveQuote(@Valid @RequestBody Quote quote) {
