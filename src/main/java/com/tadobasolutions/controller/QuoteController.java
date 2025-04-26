@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/quotes")
-@CrossOrigin(origins = {"https://www.tadobasolutions.com", "https://tadobasolutions.com"})
+@CrossOrigin(origins = {"https://www.tadobasolutions.com", "https://tadobasolutions.com","http://localhost:4200"})
 public class QuoteController {
 
     @Autowired
@@ -45,7 +45,32 @@ public class QuoteController {
         ApiResponse<List<Quote>> response = new ApiResponse<List<Quote>>();
         response.setData(data);
         response.setMessage("Quote list fetched successfully!");
-        response.setStatusCode(HttpStatus.CREATED.value());
+        response.setStatusCode(HttpStatus.OK.value());
+        response.setTimeStamp(LocalDate.now());
+        response.setSuccess(true);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @GetMapping("/get-visit-count")
+    public ResponseEntity<?> getVisitCount(){
+        Long data = quoteService.getVisitCount();
+
+        ApiResponse<Long> response = new ApiResponse<Long>();
+        response.setData(data);
+        response.setMessage("Visit Count Fetched Successfully");
+        response.setStatusCode(HttpStatus.OK.value());
+        response.setTimeStamp(LocalDate.now());
+        response.setSuccess(true);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @GetMapping("update-visit-count")
+    public ResponseEntity<?> updateVisitCount(){
+         quoteService.updateVisitCount();
+        ApiResponse<String> response = new ApiResponse<String>();
+        response.setData("Visit Count Updated");
+        response.setMessage("Visit Count Updated successfully.");
+        response.setStatusCode(HttpStatus.OK.value());
         response.setTimeStamp(LocalDate.now());
         response.setSuccess(true);
         return ResponseEntity.status(HttpStatus.OK).body(response);

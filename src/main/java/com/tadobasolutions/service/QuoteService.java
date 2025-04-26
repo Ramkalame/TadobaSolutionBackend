@@ -10,5 +10,7 @@ public interface QuoteService {
 
     public String saveQuote(Quote quote);
     public List<Quote> getAllQuoteList();
+    public Long getVisitCount();
+    public void updateVisitCount();
 
 }
