@@ -16,10 +16,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/quotes")
 @CrossOrigin(origins = {"https://www.tadobasolutions.com", "https://tadobasolutions.com","http://localhost:4200"})
+@RequiredArgsConstructor
 public class QuoteController {
 
-    @Autowired
-    private  QuoteService quoteService;
+    private final  QuoteService quoteService;
 
     @GetMapping("/test")
     public String test(){

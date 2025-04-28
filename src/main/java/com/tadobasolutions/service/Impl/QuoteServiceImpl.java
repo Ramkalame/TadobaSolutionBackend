@@ -16,12 +16,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class QuoteServiceImpl implements QuoteService {
 
-    @Autowired
-    private  QuoteRepository quoteRepository;
-    @Autowired
-    private  CounterRepository counterRepository;
+    private final  QuoteRepository quoteRepository;
+    private final  CounterRepository counterRepository;
 
     @Override
     public String saveQuote(Quote quote) {
