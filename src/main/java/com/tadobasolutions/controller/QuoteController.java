@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -30,51 +31,55 @@ public class QuoteController {
     @PostMapping("/save-quote")
     public ResponseEntity<ApiResponse<String>> saveQuote(@Valid @RequestBody Quote quote) {
         String data = quoteService.saveQuote(quote);
-        ApiResponse<String> response = new ApiResponse<String>();
-        response.setData(data);
-        response.setMessage("Quote saved successfully!");
-        response.setStatusCode(HttpStatus.CREATED.value());
-        response.setTimeStamp(LocalDate.now());
-        response.setSuccess(true);
+        ApiResponse<String> response = ApiResponse.<String>builder()
+                .data(data)
+                .message("Quote saved successfully!")
+                .statusCode(HttpStatus.CREATED.value())
+                .timeStamp(LocalDateTime.now())
+                .success(true)
+                .build();
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse<List<Quote>>> getAllQuoteList(){
+    public ResponseEntity<ApiResponse<List<Quote>>> getAllQuoteList() {
         List<Quote> data = quoteService.getAllQuoteList();
-        ApiResponse<List<Quote>> response = new ApiResponse<List<Quote>>();
-        response.setData(data);
-        response.setMessage("Quote list fetched successfully!");
-        response.setStatusCode(HttpStatus.OK.value());
-        response.setTimeStamp(LocalDate.now());
-        response.setSuccess(true);
+        ApiResponse<List<Quote>> response = ApiResponse.<List<Quote>>builder()
+                .data(data)
+                .message("Quote list fetched successfully!")
+                .statusCode(HttpStatus.OK.value())
+                .timeStamp(LocalDateTime.now())
+                .success(true)
+                .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @GetMapping("/get-visit-count")
-    public ResponseEntity<?> getVisitCount(){
+    public ResponseEntity<ApiResponse<Long>> getVisitCount() {
         Long data = quoteService.getVisitCount();
-
-        ApiResponse<Long> response = new ApiResponse<Long>();
-        response.setData(data);
-        response.setMessage("Visit Count Fetched Successfully");
-        response.setStatusCode(HttpStatus.OK.value());
-        response.setTimeStamp(LocalDate.now());
-        response.setSuccess(true);
+        ApiResponse<Long> response = ApiResponse.<Long>builder()
+                .data(data)
+                .message("Visit Count Fetched Successfully")
+                .statusCode(HttpStatus.OK.value())
+                .timeStamp(LocalDateTime.now())
+                .success(true)
+                .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @GetMapping("update-visit-count")
-    public ResponseEntity<?> updateVisitCount(){
-         quoteService.updateVisitCount();
-        ApiResponse<String> response = new ApiResponse<String>();
-        response.setData("Visit Count Updated");
-        response.setMessage("Visit Count Updated successfully.");
-        response.setStatusCode(HttpStatus.OK.value());
-        response.setTimeStamp(LocalDate.now());
-        response.setSuccess(true);
+    @GetMapping("/update-visit-count")
+    public ResponseEntity<ApiResponse<String>> updateVisitCount() {
+        quoteService.updateVisitCount();
+        ApiResponse<String> response = ApiResponse.<String>builder()
+                .data("Visit Count Updated")
+                .message("Visit Count Updated successfully.")
+                .statusCode(HttpStatus.OK.value())
+                .timeStamp(LocalDateTime.now())
+                .success(true)
+                .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
 
 
 
