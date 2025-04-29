@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 
 @Data
@@ -18,7 +19,7 @@ public class ApiResponse<T> {
     private T data;
     private String message;
     private int statusCode;
-    private LocalDate timeStamp;
+    private LocalDateTime timeStamp;
     private boolean success;
 
 }

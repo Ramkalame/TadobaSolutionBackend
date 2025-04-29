@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,9 +26,22 @@ public class GlobalException {
         response.setData(errors);
         response.setMessage("Validation failed");
         response.setStatusCode(HttpStatus.BAD_REQUEST.value());
-        response.setTimeStamp(LocalDate.now());
+        response.setTimeStamp(LocalDateTime.now());
         response.setSuccess(false);
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+
+    @ExceptionHandler(GoogleSheetException.class)
+    public ResponseEntity<ApiResponse<?>> handleGoogleSheetException(GoogleSheetException exception){
+        ApiResponse<Object> apiResponse = ApiResponse.builder()
+                .data(null)
+                .message(exception.getMessage())
+                .timeStamp(LocalDateTime.now())
+                .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .success(false)
+                .build();
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(apiResponse);
     }
 }
