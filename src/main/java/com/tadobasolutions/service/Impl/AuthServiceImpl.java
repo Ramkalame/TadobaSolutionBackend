@@ -11,6 +11,8 @@ import com.tadobasolutions.exception.ResourceNotFoundException;
 import com.tadobasolutions.repository.DepartmentRepository;
 import com.tadobasolutions.repository.RoleRepository;
 import com.tadobasolutions.repository.UserRepository;
+import com.tadobasolutions.security.JwtUtils;
+import com.tadobasolutions.security.services.UserDetailsImpl;
 import com.tadobasolutions.service.AuthService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -106,7 +109,7 @@ public class AuthServiceImpl implements AuthService {
 
         user.setRoles(roles);
 
-        // Set department if provided
+        // Set department if providedS
         if (signUpRequest.getDepartmentId() != null) {
             Department department = departmentRepository.findById(signUpRequest.getDepartmentId())
                     .orElseThrow(() -> new ResourceNotFoundException("Department not found with id: " + signUpRequest.getDepartmentId()));

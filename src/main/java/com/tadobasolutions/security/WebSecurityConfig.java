@@ -2,6 +2,7 @@ package com.tadobasolutions.security;
 
 import com.tadobasolutions.security.jwt.AuthEntryPointJwt;
 import com.tadobasolutions.security.jwt.AuthTokenFilter;
+import com.tadobasolutions.security.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

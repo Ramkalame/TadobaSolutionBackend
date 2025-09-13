@@ -1,6 +1,7 @@
 package com.tadobasolutions.security.jwt;
 
 import com.tadobasolutions.security.JwtUtils;
+import com.tadobasolutions.security.services.UserDetailsServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

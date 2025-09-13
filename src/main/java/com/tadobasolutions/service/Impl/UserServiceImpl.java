@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
     private PasswordEncoder encoder;
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public UserProfileDTO getCurrentUserProfile() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByUsername(username)
@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public List<UserDTO> getAllUsers() {
         return userRepository.findAll().stream()
                 .map(this::convertToDTO)
@@ -77,7 +77,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public List<UserDTO> getEmployeesByManager(Long managerId) {
         return userRepository.findEmployeesByManagerId(managerId).stream()
                 .map(this::convertToDTO)
@@ -85,7 +85,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public List<UserDTO> getEmployeesByDepartmentAndManager(Long departmentId, Long managerId) {
         return userRepository.findByDepartmentIdAndManagerId(departmentId, managerId).stream()
                 .map(this::convertToDTO)
