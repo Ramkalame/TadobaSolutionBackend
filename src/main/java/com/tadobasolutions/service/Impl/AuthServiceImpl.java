@@ -13,7 +13,6 @@ import com.tadobasolutions.repository.RoleRepository;
 import com.tadobasolutions.repository.UserRepository;
 import com.tadobasolutions.security.JwtUtils;
 import com.tadobasolutions.security.services.UserDetailsImpl;
-import com.tadobasolutions.service.AuthService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;

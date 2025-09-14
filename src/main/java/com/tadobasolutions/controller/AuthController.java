@@ -1,7 +1,6 @@
 package com.tadobasolutions.controller;
 
 import com.tadobasolutions.dto.*;
-import com.tadobasolutions.service.AuthService;
 import com.tadobasolutions.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
