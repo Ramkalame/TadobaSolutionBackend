@@ -34,19 +34,6 @@ public class GlobalException {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
-
-    @ExceptionHandler(GoogleSheetException.class)
-    public ResponseEntity<ApiResponse<?>> handleGoogleSheetException(GoogleSheetException exception){
-        ApiResponse<Object> apiResponse = ApiResponse.builder()
-                .data(null)
-                .message(exception.getMessage())
-                .timeStamp(LocalDateTime.now())
-                .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                .success(false)
-                .build();
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(apiResponse);
-    }
-
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<?> resourceNotFoundException(ResourceNotFoundException ex, WebRequest request) {
         ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), request.getDescription(false));
