@@ -1,8 +1,8 @@
-package com.tadobasolutions.entity;
+package com.tadobasolutions.entity.enums;
 
 public enum TaskStatus {
     PENDING,
-    IN_PROGRESS,
     COMPLETED,
+    LATE,
     OVERDUE
 }

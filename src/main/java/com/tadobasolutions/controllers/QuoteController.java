@@ -1,16 +1,14 @@
-package com.tadobasolutions.controller;
+package com.tadobasolutions.controllers;
 
 import com.tadobasolutions.entity.Quote;
 import com.tadobasolutions.service.QuoteService;
 import com.tadobasolutions.utilities.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -20,10 +18,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class QuoteController {
 
-    private final  QuoteService quoteService;
+    private final QuoteService quoteService;
 
     @GetMapping("/test")
-    public String test(){
+    public String test() {
         return "Test done successfully";
     }
 
@@ -79,9 +77,5 @@ public class QuoteController {
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
-
-
-
-
 
 }

@@ -1,18 +1,18 @@
-package com.tadobasolutions.exception;
+package com.tadobasolutions.exception.handler;
 
+import com.tadobasolutions.exception.BadRequestException;
+import com.tadobasolutions.exception.ResourceNotFoundException;
 import com.tadobasolutions.utilities.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.context.request.WebRequest;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @RestControllerAdvice
 public class GlobalException {
@@ -35,20 +35,27 @@ public class GlobalException {
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<?> resourceNotFoundException(ResourceNotFoundException ex, WebRequest request) {
-        ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), request.getDescription(false));
-        return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
+    public ResponseEntity<ApiResponse<?>> resourceNotFoundException(ResourceNotFoundException ex) {
+        ApiResponse<Objects> apiResponse = ApiResponse.<Objects>builder()
+                .data(null)
+                .message(ex.getMessage())
+                .timeStamp(LocalDateTime.now())
+                .statusCode(HttpStatus.NOT_FOUND.value())
+                .success(false)
+                .build();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiResponse);
     }
 
     @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<?> badRequestException(BadRequestException ex, WebRequest request) {
-        ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), request.getDescription(false));
-        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+    public ResponseEntity<ApiResponse<?>> badRequestException(BadRequestException ex) {
+        ApiResponse<Objects> apiResponse = ApiResponse.<Objects>builder()
+                .data(null)
+                .message(ex.getMessage())
+                .timeStamp(LocalDateTime.now())
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .success(false)
+                .build();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiResponse);
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<?> globalExceptionHandler(Exception ex, WebRequest request) {
-        ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), request.getDescription(false));
-        return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
 }
