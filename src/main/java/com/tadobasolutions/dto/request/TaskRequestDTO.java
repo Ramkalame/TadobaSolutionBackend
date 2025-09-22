@@ -15,5 +15,4 @@ public class TaskRequestDTO {
     private LocalDate targetDate;
     private LocalDate submissionDate;
     private Long employeeId;
-    private LocalDate assignedDate;
 }
