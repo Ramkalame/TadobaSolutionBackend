@@ -1,4 +1,4 @@
-package com.tadobasolutions.service;
+package com.tadobasolutions.service.Impl;
 
 import com.tadobasolutions.entity.Task;
 import com.tadobasolutions.entity.enums.TaskStatus;
@@ -19,7 +19,7 @@ public class TaskSchedulerService {
     private final TaskRepository taskRepository;
 
     // Runs every day at 1 AM
-    @Scheduled(cron = "0 0 1 * * ?")
+    @Scheduled(cron = "0 0 1 * * ?", zone = "Asia/Kolkata")
     public void markOverdueTasks() {
         LocalDate today = LocalDate.now();
         List<Task> overdueTasks = taskRepository.findAll().stream()
@@ -30,7 +30,6 @@ public class TaskSchedulerService {
         if (!overdueTasks.isEmpty()) {
             overdueTasks.forEach(task -> task.setStatus(TaskStatus.OVERDUE));
             taskRepository.saveAll(overdueTasks);
-            log.info("Marked {} tasks as OVERDUE", overdueTasks.size());
         }
     }
 }
