@@ -1,7 +1,6 @@
 package com.tadobasolutions.controllers;
 
 import com.tadobasolutions.dto.DepartmentDTO;
-import com.tadobasolutions.entity.Department;
 import com.tadobasolutions.service.DepartmentService;
 import com.tadobasolutions.utilities.ApiResponse;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/departments")
+@CrossOrigin(origins = "http://localhost:4200")
 @RequiredArgsConstructor
 public class DepartmentController {
 

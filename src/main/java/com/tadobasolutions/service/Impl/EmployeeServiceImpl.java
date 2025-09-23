@@ -49,7 +49,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee emp = new Employee();
         emp.setName(dto.getName());
         emp.setEmail(dto.getEmail());
-        emp.setPassword(dto.getPassword());
+        emp.setPassword("Tadoba@123");
         emp.setDepartment(department);
         emp.setDob(dto.getDob());
         emp.setResponsibilities(dto.getResponsibilities());
