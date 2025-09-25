@@ -17,4 +17,8 @@ public class Department {
 
     @Column(nullable = false, unique = true)
     private String name;
+
+    @OneToOne
+    @JoinColumn(name = "incharge_id", referencedColumnName = "id", nullable = true)
+    private Employee incharge;
 }

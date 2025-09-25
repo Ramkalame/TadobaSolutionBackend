@@ -34,6 +34,10 @@ public class Employee {
     @JoinColumn(name = "department_id", nullable = false)
     private Department department;
 
+    @Column(nullable = false)
+    private LocalDate joiningDate;
+
+    @Column(nullable = false)
     private LocalDate dob;
 
     @Column(columnDefinition = "TEXT")

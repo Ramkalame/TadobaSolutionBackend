@@ -1,5 +1,6 @@
 package com.tadobasolutions.controllers;
 
+import com.tadobasolutions.dto.TaskStatusCountDTO;
 import com.tadobasolutions.dto.request.TaskRequestDTO;
 import com.tadobasolutions.dto.response.TaskResponseDTO;
 import com.tadobasolutions.entity.enums.TaskStatus;
@@ -16,8 +17,14 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/tasks")
-@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/api/tasks")
+@CrossOrigin(origins = {
+        "http://localhost:4200",
+        "http://tadobasolutions.com",
+        "https://tadobasolutions.com",
+        "http://mis.tadobasolutions.com",
+        "https://mis.tadobasolutions.com"
+})
 @RequiredArgsConstructor
 public class TaskController {
 
@@ -105,6 +112,23 @@ public class TaskController {
                 ApiResponse.<TaskResponseDTO>builder()
                         .data(submitted)
                         .message("Task submitted successfully")
+                        .statusCode(HttpStatus.OK.value())
+                        .timeStamp(LocalDateTime.now())
+                        .success(true)
+                        .build()
+        );
+    }
+
+    @GetMapping("/status-counts")
+    public ResponseEntity<ApiResponse<TaskStatusCountDTO>> getTaskStatusCounts(
+            @RequestParam(required = false) Long employeeId) {
+
+        TaskStatusCountDTO counts = taskService.getTaskStatusCounts(employeeId);
+
+        return ResponseEntity.ok(
+                ApiResponse.<TaskStatusCountDTO>builder()
+                        .data(counts)
+                        .message("Task counts fetched successfully")
                         .statusCode(HttpStatus.OK.value())
                         .timeStamp(LocalDateTime.now())
                         .success(true)

@@ -8,7 +8,7 @@ import java.util.List;
 public interface DepartmentService {
     DepartmentDTO createDepartment(String name);
 
-    DepartmentDTO updateDepartment(Long id, String name);
+    DepartmentDTO updateDepartment(Long id, String name, Long inchargeId);
 
     void deleteDepartment(Long id);
 

@@ -15,6 +15,7 @@ public class EmployeeRequestDTO {
     private String email;
     private String password;
     private Long departmentId;
+    private LocalDate joiningDate;
     private LocalDate dob;
     private String responsibilities;
 }

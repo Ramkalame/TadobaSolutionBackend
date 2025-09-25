@@ -29,6 +29,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 emp.getEmail(),
                 emp.getDepartment().getId(),
                 emp.getDepartment().getName(),
+                emp.getJoiningDate(),
                 emp.getDob(),
                 emp.getResponsibilities(),
                 emp.getRole(),
@@ -49,6 +50,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee emp = new Employee();
         emp.setName(dto.getName());
         emp.setEmail(dto.getEmail());
+        emp.setJoiningDate(dto.getJoiningDate());
         emp.setPassword("Tadoba@123");
         emp.setDepartment(department);
         emp.setDob(dto.getDob());
@@ -67,6 +69,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         if (dto.getEmail() != null && !dto.getEmail().isBlank()) {
             emp.setEmail(dto.getEmail());
+        }
+        if (dto.getJoiningDate() != null) {
+            emp.setJoiningDate(dto.getJoiningDate());
         }
         if (dto.getDob() != null) {
             emp.setDob(dto.getDob());
@@ -89,11 +94,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public void deleteEmployee(Long id) {
-        if (!employeeRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Employee not found");
-        }
-        employeeRepository.deleteById(id);
+        Employee employee = employeeRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found"));
+        departmentRepository.findByIncharge_Id(id).ifPresent(dept -> {
+            dept.setIncharge(null);
+            departmentRepository.save(dept);
+        });
+        employeeRepository.delete(employee);
     }
+
 
     @Override
     public EmployeeResponseDTO getEmployeeById(Long id) {

@@ -7,9 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DepartmentDTO {
-    private Long id;
-    private String name;
-    private Long inchargeId;
-    private String inchargeName;
+public class TaskStatusCountDTO {
+    private long total;
+    private long completed;
+    private long pending;
+    private long late;
+    private long overdue;
 }

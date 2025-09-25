@@ -13,8 +13,14 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admins")
-@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/api/admins")
+@CrossOrigin(origins = {
+        "http://localhost:4200",
+        "http://tadobasolutions.com",
+        "https://tadobasolutions.com",
+        "http://mis.tadobasolutions.com",
+        "https://mis.tadobasolutions.com"
+})
 @RequiredArgsConstructor
 public class AdminController {
 
