@@ -21,4 +21,16 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
                                   @Param("employeeId") Long employeeId,
                                   @Param("targetDate") LocalDate targetDate);
 
+    @Query("""
+                SELECT 
+                    COUNT(t) as total,
+                    SUM(CASE WHEN t.status = 'COMPLETED' THEN 1 ELSE 0 END) as completed,
+                    SUM(CASE WHEN t.status = 'PENDING' THEN 1 ELSE 0 END) as pending,
+                    SUM(CASE WHEN t.status = 'LATE' THEN 1 ELSE 0 END) as late,
+                    SUM(CASE WHEN t.status = 'OVERDUE' THEN 1 ELSE 0 END) as overdue
+                FROM Task t
+                WHERE (:employeeId IS NULL OR t.employee.id = :employeeId)
+            """)
+    Object getTaskStatusCounts(@Param("employeeId") Long employeeId);
+
 }

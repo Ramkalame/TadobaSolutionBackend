@@ -1,5 +1,6 @@
 package com.tadobasolutions.service.Impl;
 
+import com.tadobasolutions.dto.TaskStatusCountDTO;
 import com.tadobasolutions.dto.request.TaskRequestDTO;
 import com.tadobasolutions.dto.response.TaskResponseDTO;
 import com.tadobasolutions.entity.Employee;
@@ -120,5 +121,26 @@ public class TaskServiceImpl implements TaskService {
 
         return mapToDTO(taskRepository.save(task));
     }
+
+    @Override
+    public TaskStatusCountDTO getTaskStatusCounts(Long employeeId) {
+        Object result = taskRepository.getTaskStatusCounts(employeeId);
+
+        if (result == null) {
+            // no tasks found for employee or empty table
+            return new TaskStatusCountDTO(0, 0, 0, 0, 0);
+        }
+
+        Object[] row = (Object[]) result;
+
+        return new TaskStatusCountDTO(
+                row[0] != null ? ((Number) row[0]).longValue() : 0, // total
+                row[1] != null ? ((Number) row[1]).longValue() : 0, // completed
+                row[2] != null ? ((Number) row[2]).longValue() : 0, // pending
+                row[3] != null ? ((Number) row[3]).longValue() : 0, // late
+                row[4] != null ? ((Number) row[4]).longValue() : 0  // overdue
+        );
+    }
+
 
 }

@@ -12,8 +12,14 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/departments")
-@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/api/departments")
+@CrossOrigin(origins = {
+        "http://localhost:4200",
+        "http://tadobasolutions.com",
+        "https://tadobasolutions.com",
+        "http://mis.tadobasolutions.com",
+        "https://mis.tadobasolutions.com"
+})
 @RequiredArgsConstructor
 public class DepartmentController {
 
@@ -34,8 +40,8 @@ public class DepartmentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<DepartmentDTO>> update(@PathVariable Long id, @RequestParam String name) {
-        DepartmentDTO department = departmentService.updateDepartment(id, name);
+    public ResponseEntity<ApiResponse<DepartmentDTO>> update(@PathVariable Long id, @RequestParam String name, @RequestParam(required = false) Long inchargeId) {
+        DepartmentDTO department = departmentService.updateDepartment(id, name, inchargeId);
         return ResponseEntity.ok(
                 ApiResponse.<DepartmentDTO>builder()
                         .data(department)

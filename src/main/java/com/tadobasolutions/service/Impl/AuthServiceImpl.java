@@ -1,5 +1,6 @@
 package com.tadobasolutions.service.Impl;
 
+import com.tadobasolutions.dto.ChangePasswordDTO;
 import com.tadobasolutions.dto.LoginDTO;
 import com.tadobasolutions.entity.Admin;
 import com.tadobasolutions.entity.Employee;
@@ -45,4 +46,34 @@ public class AuthServiceImpl implements AuthService {
             default -> throw new BadRequestException("Unsupported user type");
         }
     }
+
+    @Override
+    public void changePassword(ChangePasswordDTO dto) {
+        if (dto.getUserType() == null) {
+            throw new BadRequestException("User type is required");
+        }
+
+        switch (dto.getUserType()) {
+            case ADMIN -> {
+                Admin admin = adminRepository.findById(dto.getId())
+                        .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+                if (!admin.getPassword().equals(dto.getOldPassword())) {
+                    throw new BadRequestException("Incorrect old password");
+                }
+                admin.setPassword(dto.getNewPassword());
+                adminRepository.save(admin);
+            }
+            case EMPLOYEE -> {
+                Employee emp = employeeRepository.findById(dto.getId())
+                        .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+                if (!emp.getPassword().equals(dto.getOldPassword())) {
+                    throw new BadRequestException("Incorrect old password");
+                }
+                emp.setPassword(dto.getNewPassword());
+                employeeRepository.save(emp);
+            }
+            default -> throw new BadRequestException("Unsupported user type");
+        }
+    }
+
 }

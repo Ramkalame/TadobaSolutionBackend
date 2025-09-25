@@ -17,6 +17,7 @@ public class EmployeeResponseDTO {
     private String email;
     private Long departmentId;
     private String departmentName;
+    private LocalDate joiningDate;
     private LocalDate dob;
     private String responsibilities;
     private Role role;

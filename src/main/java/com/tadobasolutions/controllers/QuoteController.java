@@ -14,7 +14,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/quotes")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = {
+        "http://localhost:4200",
+        "http://tadobasolutions.com",
+        "https://tadobasolutions.com",
+        "http://mis.tadobasolutions.com",
+        "https://mis.tadobasolutions.com"
+})
 @RequiredArgsConstructor
 public class QuoteController {
 
