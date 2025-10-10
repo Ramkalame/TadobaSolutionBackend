@@ -15,12 +15,12 @@ public class TaskResponseDTO {
     private Long id;
     private String task;
     private String description;
-    private LocalDate targetDate;
-    private LocalDate submissionDate;
+    private LocalDateTime targetDate;
+    private LocalDateTime submissionDate;
     private TaskStatus status;
     private Long employeeId;
     private String employeeName;
-    private LocalDate assignedDate;
+    private LocalDateTime assignedDate;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

@@ -8,7 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 @Component
@@ -18,15 +19,10 @@ public class TaskSchedulerService {
 
     private final TaskRepository taskRepository;
 
-    // Runs every day at 1 AM
-    @Scheduled(cron = "0 0 1 * * ?", zone = "Asia/Kolkata")
+    @Scheduled(fixedDelay = 600000)
     public void markOverdueTasks() {
-        LocalDate today = LocalDate.now();
-        List<Task> overdueTasks = taskRepository.findAll().stream()
-                .filter(task -> task.getStatus() == TaskStatus.PENDING &&
-                        task.getTargetDate().isBefore(today))
-                .toList();
-
+        LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Kolkata"));
+        List<Task> overdueTasks = taskRepository.findOverduePendingTasks(TaskStatus.PENDING, now);
         if (!overdueTasks.isEmpty()) {
             overdueTasks.forEach(task -> task.setStatus(TaskStatus.OVERDUE));
             taskRepository.saveAll(overdueTasks);

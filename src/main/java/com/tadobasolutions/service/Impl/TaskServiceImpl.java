@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,7 +50,7 @@ public class TaskServiceImpl implements TaskService {
         task.setTask(dto.getTask());
         task.setDescription(dto.getDescription());
         task.setTargetDate(dto.getTargetDate());
-        task.setAssignedDate(LocalDate.now());
+        task.setAssignedDate(LocalDateTime.now());
         task.setEmployee(employee);
 
         return mapToDTO(taskRepository.save(task));
@@ -98,11 +99,20 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<TaskResponseDTO> getAllTasks(TaskStatus status, Long employeeId, LocalDate targetDate) {
-        return taskRepository.findTasksByFilters(status, employeeId, targetDate)
+        LocalDateTime startDate = null;
+        LocalDateTime endDate = null;
+
+        if (targetDate != null) {
+            startDate = targetDate.atStartOfDay();
+            endDate = targetDate.plusDays(1).atStartOfDay();
+        }
+
+        return taskRepository.findTasksByFilters(status, employeeId, startDate, endDate)
                 .stream()
                 .map(this::mapToDTO)
                 .collect(Collectors.toList());
     }
+
 
 
     @Override
@@ -110,17 +120,20 @@ public class TaskServiceImpl implements TaskService {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Task not found"));
 
-        LocalDate today = LocalDate.now();
-        task.setSubmissionDate(today);
+        // Capture current date & time instead of only date
+        LocalDateTime now = LocalDateTime.now();
+        task.setSubmissionDate(now);
 
-        if (!today.isAfter(task.getTargetDate())) {
-            task.setStatus(TaskStatus.COMPLETED); // on or before target date
+        // Compare full datetime with target datetime
+        if (!now.isAfter(task.getTargetDate())) {
+            task.setStatus(TaskStatus.COMPLETED); // on or before target date & time
         } else {
-            task.setStatus(TaskStatus.LATE); // after target date
+            task.setStatus(TaskStatus.LATE); // after target date & time
         }
 
         return mapToDTO(taskRepository.save(task));
     }
+
 
     @Override
     public TaskStatusCountDTO getTaskStatusCounts(Long employeeId) {
