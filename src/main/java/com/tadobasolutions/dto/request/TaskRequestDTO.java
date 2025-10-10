@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -12,7 +13,7 @@ import java.time.LocalDate;
 public class TaskRequestDTO {
     private String task;
     private String description;
-    private LocalDate targetDate;
-    private LocalDate submissionDate;
+    private LocalDateTime targetDate;
+    private LocalDateTime submissionDate;
     private Long employeeId;
 }

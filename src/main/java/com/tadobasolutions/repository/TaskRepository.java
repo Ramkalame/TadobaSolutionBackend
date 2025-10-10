@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface TaskRepository extends JpaRepository<Task, Long> {
@@ -15,11 +16,13 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     @Query("SELECT t FROM Task t " +
             "WHERE (:status IS NULL OR t.status = :status) " +
             "AND (:employeeId IS NULL OR t.employee.id = :employeeId) " +
-            "AND (:targetDate IS NULL OR t.targetDate = :targetDate) " +
+            "AND (:startDate IS NULL OR (t.targetDate >= :startDate AND t.targetDate < :endDate)) " +
             "ORDER BY t.assignedDate DESC")
     List<Task> findTasksByFilters(@Param("status") TaskStatus status,
                                   @Param("employeeId") Long employeeId,
-                                  @Param("targetDate") LocalDate targetDate);
+                                  @Param("startDate") LocalDateTime startDate,
+                                  @Param("endDate") LocalDateTime endDate);
+
 
     @Query("""
                 SELECT 
@@ -32,5 +35,12 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
                 WHERE (:employeeId IS NULL OR t.employee.id = :employeeId)
             """)
     Object getTaskStatusCounts(@Param("employeeId") Long employeeId);
+
+
+    @Query("SELECT t FROM Task t " +
+            "WHERE t.status = :status " +
+            "AND t.targetDate < :now")
+    List<Task> findOverduePendingTasks(@Param("status") TaskStatus status,
+                                       @Param("now") LocalDateTime now);
 
 }
