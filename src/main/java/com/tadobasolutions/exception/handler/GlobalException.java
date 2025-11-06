@@ -1,6 +1,7 @@
 package com.tadobasolutions.exception.handler;
 
 import com.tadobasolutions.exception.BadRequestException;
+import com.tadobasolutions.exception.CertificateNotFoundException;
 import com.tadobasolutions.exception.ResourceNotFoundException;
 import com.tadobasolutions.utilities.ApiResponse;
 import org.springframework.http.HttpStatus;
@@ -56,6 +57,19 @@ public class GlobalException {
                 .success(false)
                 .build();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiResponse);
+    }
+
+
+    @ExceptionHandler(CertificateNotFoundException.class)
+    public ResponseEntity<ApiResponse<?>> certificateNotFoundException(CertificateNotFoundException ex) {
+        ApiResponse<Objects> apiResponse = ApiResponse.<Objects>builder()
+                .data(null)
+                .message(ex.getMessage())
+                .timeStamp(LocalDateTime.now())
+                .statusCode(HttpStatus.NOT_FOUND.value())
+                .success(false)
+                .build();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiResponse);
     }
 
 }
