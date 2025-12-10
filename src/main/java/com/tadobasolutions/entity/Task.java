@@ -43,6 +43,8 @@ public class Task {
     @JoinColumn(name = "employee_id", nullable = false)
     private Employee employee;
 
+    private Integer empRating;
+    private Integer adminRating;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
