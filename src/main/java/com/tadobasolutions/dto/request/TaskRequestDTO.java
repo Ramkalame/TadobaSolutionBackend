@@ -16,4 +16,6 @@ public class TaskRequestDTO {
     private LocalDateTime targetDate;
     private LocalDateTime submissionDate;
     private Long employeeId;
+    private Integer empRating;
+    private Integer adminRating;
 }

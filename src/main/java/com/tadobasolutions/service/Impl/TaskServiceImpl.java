@@ -37,7 +37,9 @@ public class TaskServiceImpl implements TaskService {
                 task.getEmployee().getName(),
                 task.getAssignedDate(),
                 task.getCreatedAt(),
-                task.getUpdatedAt()
+                task.getUpdatedAt(),
+                task.getEmpRating(),
+                task.getAdminRating()
         );
     }
 
@@ -52,6 +54,8 @@ public class TaskServiceImpl implements TaskService {
         task.setTargetDate(dto.getTargetDate());
         task.setAssignedDate(LocalDateTime.now());
         task.setEmployee(employee);
+        task.setEmpRating(0);
+        task.setAdminRating(0);
 
         return mapToDTO(taskRepository.save(task));
     }
@@ -72,6 +76,12 @@ public class TaskServiceImpl implements TaskService {
         }
         if (dto.getSubmissionDate() != null) {
             task.setSubmissionDate(dto.getSubmissionDate());
+        }
+        if (dto.getEmpRating() != null){
+            task.setEmpRating(dto.getEmpRating());
+        }
+        if (dto.getAdminRating() != null){
+            task.setAdminRating(dto.getAdminRating());
         }
         if (dto.getEmployeeId() != null) {
             Employee employee = employeeRepository.findById(dto.getEmployeeId())
@@ -112,7 +122,6 @@ public class TaskServiceImpl implements TaskService {
                 .map(this::mapToDTO)
                 .collect(Collectors.toList());
     }
-
 
 
     @Override
