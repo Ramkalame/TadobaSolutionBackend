@@ -25,4 +25,5 @@ public class TaskResponseDTO {
     private LocalDateTime updatedAt;
     private Integer empRating;
     private Integer adminRating;
+    private String adminRemarks;
 }
