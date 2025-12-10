@@ -45,6 +45,7 @@ public class Task {
 
     private Integer empRating;
     private Integer adminRating;
+    private String adminRemarks;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

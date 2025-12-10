@@ -18,4 +18,5 @@ public class TaskRequestDTO {
     private Long employeeId;
     private Integer empRating;
     private Integer adminRating;
+    private String adminRemarks;
 }

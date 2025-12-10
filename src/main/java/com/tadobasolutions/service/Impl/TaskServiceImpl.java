@@ -39,7 +39,8 @@ public class TaskServiceImpl implements TaskService {
                 task.getCreatedAt(),
                 task.getUpdatedAt(),
                 task.getEmpRating(),
-                task.getAdminRating()
+                task.getAdminRating(),
+                task.getAdminRemarks()
         );
     }
 
@@ -82,6 +83,9 @@ public class TaskServiceImpl implements TaskService {
         }
         if (dto.getAdminRating() != null){
             task.setAdminRating(dto.getAdminRating());
+        }
+        if (dto.getAdminRemarks() !=null) {
+            task.setAdminRemarks(dto.getAdminRemarks());
         }
         if (dto.getEmployeeId() != null) {
             Employee employee = employeeRepository.findById(dto.getEmployeeId())
