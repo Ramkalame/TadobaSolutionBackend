@@ -2,6 +2,7 @@ package com.tadobasolutions.service;
 
 import com.tadobasolutions.dto.TaskStatusCountDTO;
 import com.tadobasolutions.dto.request.TaskRequestDTO;
+import com.tadobasolutions.dto.response.ReportSummaryDTO;
 import com.tadobasolutions.dto.response.TaskResponseDTO;
 import com.tadobasolutions.entity.enums.TaskStatus;
 
@@ -22,4 +23,11 @@ public interface TaskService {
     TaskResponseDTO submitTask(Long id);
 
     TaskStatusCountDTO getTaskStatusCounts(Long employeeId);
+
+    ReportSummaryDTO getMonthlyReportSummary(Long employeeId, int month, int year);
+
+    byte[] exportMonthlyReportExcel(Long employeeId, int month, int year);
+
+    String getEmployeeNameById(Long id);
+
 }
