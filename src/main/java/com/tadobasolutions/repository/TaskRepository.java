@@ -25,15 +25,15 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
 
     @Query("""
-                SELECT 
-                    COUNT(t) as total,
-                    SUM(CASE WHEN t.status = 'COMPLETED' THEN 1 ELSE 0 END) as completed,
-                    SUM(CASE WHEN t.status = 'PENDING' THEN 1 ELSE 0 END) as pending,
-                    SUM(CASE WHEN t.status = 'LATE' THEN 1 ELSE 0 END) as late,
-                    SUM(CASE WHEN t.status = 'OVERDUE' THEN 1 ELSE 0 END) as overdue
-                FROM Task t
-                WHERE (:employeeId IS NULL OR t.employee.id = :employeeId)
-            """)
+    SELECT 
+        COUNT(t) as total,
+        SUM(CASE WHEN t.status = 'COMPLETED' OR t.status = 'LATE' THEN 1 ELSE 0 END) as completed,
+        SUM(CASE WHEN t.status = 'PENDING' THEN 1 ELSE 0 END) as pending,
+        SUM(CASE WHEN t.status = 'LATE' THEN 1 ELSE 0 END) as late,
+        SUM(CASE WHEN t.status = 'OVERDUE' THEN 1 ELSE 0 END) as overdue
+    FROM Task t
+    WHERE (:employeeId IS NULL OR t.employee.id = :employeeId)
+""")
     Object getTaskStatusCounts(@Param("employeeId") Long employeeId);
 
 
@@ -42,5 +42,13 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
             "AND t.targetDate < :now")
     List<Task> findOverduePendingTasks(@Param("status") TaskStatus status,
                                        @Param("now") LocalDateTime now);
+
+    @Query("SELECT t FROM Task t WHERE t.employee.id = :employeeId " +
+            "AND MONTH(t.targetDate) = :month AND YEAR(t.targetDate) = :year")
+    List<Task> findTasksForMonthlyReport(
+            @Param("employeeId") Long employeeId,
+            @Param("month") int month,
+            @Param("year") int year
+    );
 
 }
